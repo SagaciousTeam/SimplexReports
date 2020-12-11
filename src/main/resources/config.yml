@@ -1,0 +1,14 @@
+##DATABASE CONFIG
+table_prefix: simplexreports_
+mysql:
+  enabled: false
+  host: localhost
+  port: 3306
+  database: simplexreports
+  user: root
+  passwd: passwd
+sqlite: #Using when mysql is disabled
+  database: simplexreports
+
+#NUMBER OF REPORTS TO SHOW IN /REPORTS COMMAND
+reports_list: 10

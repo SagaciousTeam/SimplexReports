@@ -1,0 +1,17 @@
+name: SimplexReports
+version: 1.0
+main: pk7r.simplexreports.Main
+api-version: 1.13
+authors: [pk7r, Luucx7]
+description: A simple and complete report plugin
+
+commands:
+
+  report:
+
+  reports:
+
+  rinfo:
+
+
+

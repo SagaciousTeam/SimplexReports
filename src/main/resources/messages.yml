@@ -1,0 +1,50 @@
+##NO PERMISSION MESSAGE
+no_permission: '&6[SimplexReports] &cYou are not allowed to do this.'
+
+##REPORT COMMAND (/report) MESSAGES
+sucess_report: '&6[SimplexReports] &aYou have successfully reported &6%reported%&a.'
+report_missing_message: '&6[SimplexReports] &7Please include a message in your report.'
+unkown_player: '&6[SimplexReports] &7This player is not online or does not exist!'
+report_me: '&6[SimplexReports] &7You cannot report yourself!'
+correct_usage: '&6[SimplexReports] &7Correct use: /report <player> <message>'
+
+##SERVER OPERATOR OR USER WITH PERM (reports.admin) WILL RECEIVE
+##THIS MESSAGE WHEN A REPORT IS PERFORMED
+admin_warn:
+  - ''
+  - '&6&nNew Report'
+  - ''
+  - '&6Report ID: &f%id%'
+  - '&6Reporter: &f%reporter%'
+  - '&6Reported: &f%reported%'
+  - '&6Message: [&e[Mouse over to view message]](hover=%message%)'
+  - '&6Date: &f%month%&7/&f%day%&7/&f%year%'
+  - '&6Time: &f%hour%&7:&f%minute%&7:&f%second%'
+  - ''
+
+
+##REPORT INFO COMMAND (/rinfo <id>)
+rinfo_message:
+  - '&6&nReport Info'
+  - ''
+  - '&6Report ID: &f%id%'
+  - '&6Reporter: &f%reporter%'
+  - '&6Reported: &f%reported%'
+  - '&6Message: [&f[Mouse over to view message]](hover=%message%)'
+  - '&6Date: &f%date%'
+  - '&6Time: &f%time%'
+  - ''
+  - ''
+
+rinfo_usage: '&6[SimplexReports] &7Correct use: /rinfo <id>'
+
+unkown_report: '&6[SimplexReports] &cThis report does not exist.'
+
+##REPORTS COMMAND (/reports) CONSTRUCTOR
+reports_header:
+  - '&6&nReports List'
+  - ''
+reports_message: '&6ID: &f%id% &6Reporter: &f%reporter% &6Reported: &f%reported% [&6[Details]](/rinfo %id%)'
+reports_footer:
+  - ''
+  - ''
