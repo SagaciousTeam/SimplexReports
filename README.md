@@ -9,12 +9,12 @@ Command|Description
 /reports |Show the reports list (requires mysql or sqlite connection)
 /rinfo [ID]|Details a ticket per ID
 
-### Permissions:
+## Permissions:
 Permission|Description
 ---|---
 reports.admin|Permission for admin commands (/rinfo <id> : /reports)
 
-#### MineDown tutorial:
+## MineDown tutorial:
 
 https://github.com/Phoenix616/MineDown#advanced-syntax
 
