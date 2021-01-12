@@ -1,5 +1,6 @@
 package pk7r.simplexreports.commands.subcommands;
 
+import de.themoep.minedown.MineDown;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -11,40 +12,43 @@ import java.sql.SQLException;
 
 public class ReportCommand implements CMDBase {
 
-	public void onCommand(CommandSender sender, String[] args) throws SQLException, ClassNotFoundException {
+	public void onCommand(CommandSender s, String[] args) throws SQLException, ClassNotFoundException {
+		Player sender = (Player) s;
+		if ( (s instanceof Player) ) {
+			if ( args.length < 1 ) {
+				sender.spigot().sendMessage(MineDown.parse(Main.usage));
+				return;
+			}
+			if ( args.length < 2 ) {
+				sender.spigot().sendMessage(MineDown.parse(Main.errormessage));
+				return;
+			}
+			Player reported = Bukkit.getPlayer(args[0]);
+			String motivo = "";
 
-		if (args.length < 1) {
-			sender.sendMessage(Main.usage);
-			return;
-		}
-		if (args.length < 2) {
-			sender.sendMessage(Main.errormessage);
-			return;
-		}
-		Player reported = Bukkit.getPlayer(args[0]);
-		String motivo = "";
 
+			if ( reported == null ) {
+				sender.spigot().sendMessage(MineDown.parse(Main.offlineplayer));
+				return;
+			}
+			if ( reported == sender ) {
+				sender.spigot().sendMessage(MineDown.parse(Main.reportme));
+				return;
 
-		if (reported == null) {
-			sender.sendMessage(Main.offlineplayer);
-			return;
-		}
-		if (reported == sender) {
-			sender.sendMessage(Main.reportme);
-			return;
+			}
+			for (int i = 1; i <= args.length - 1; i++) {
+				motivo = motivo + args[i];
+				if ( i != args.length - 1 )
+					motivo = motivo + " ";
+			}
 
+			Report report = new Report(sender.getName(), reported.getName(), motivo);
+			report.saveAsync();
+			sender.spigot().sendMessage(MineDown.parse(Main.sucessreport
+					.replaceAll("%reported%", reported.getName())));
+		} else {
+			s.sendMessage("[SimplexReports] Console can't create reports. [ERROR]");
 		}
-		for (int i = 1; i <= args.length - 1; i++) {
-			motivo = motivo + args[i];
-			if (i != args.length - 1)
-				motivo = motivo + " ";
-		}
-
-		Report report = new Report(sender.getName(), reported.getName(), motivo);
-		report.saveAsync();
-		report.adminWarn();
-		sender.sendMessage(Main.sucessreport
-				.replaceAll("%reported%",reported.getName()));
 	}
 
 	public String name() {return "report";}

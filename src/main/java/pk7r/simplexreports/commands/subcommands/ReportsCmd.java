@@ -17,43 +17,47 @@ public class ReportsCmd implements CMDBase {
 
 	@Override
 	public void onCommand(CommandSender s, String[] args) throws SQLException, ClassNotFoundException {
-		if ( !s.hasPermission("reports.admin") ) {
-			s.sendMessage(Main.noperm);
-			return;
-		}
-		Player p = (Player) s;
-		/*
-		 * Por se tratar de uma consulta no banco de dádos, é sempre recomendado realizar de maneira assíncrona
-		 * para evitar travadas no servidor (Minecraft possúi apenas uma thread).
-		 */
-		Bukkit.getScheduler().runTaskAsynchronously(Main.getMain(), () -> {
-
-			// Lista com os valores do banco de dados
-			LinkedList<Report> reports = ReportManager.getLastReports();
-
+		if ( s instanceof Player ) {
+			if ( !s.hasPermission("reports.admin") ) {
+				s.sendMessage(Main.noperm);
+				return;
+			}
+			Player p = (Player) s;
 			/*
-			 * Construtor da mensagem
-			 * Mesmo que não tenham 10 valores no banco, não dará erro
-			 * Pois executa um forEach (Para cada)
+			 * Por se tratar de uma consulta no banco de dádos, é sempre recomendado realizar de maneira assíncrona
+			 * para evitar travadas no servidor (Minecraft possúi apenas uma thread).
 			 */
-			List<String> list = Main.getMain().messages.getStringList("reports_header");
-			for (String line : list) {
-				p.spigot().sendMessage(MineDown.parse(line));
-			}
-			reports.stream().forEachOrdered(r -> {
-				p.spigot().sendMessage(MineDown.parse(Main.noperm3
-				.replaceAll("%id%", String.valueOf(r.getID()))
-				.replaceAll("%reporter%", r.getReporter())
-				.replaceAll("%reported%", r.getReportado())
-				.replaceAll("%date%",  r.getData().getDayOfMonth()+"§7/§f"+r.getData().getMonthValue())
-				.replaceAll("%time%", r.getData().getHour()+"§7:§f"+r.getData().getMinute())
-				.replaceAll("%message%", r.getMensagem())));
+			Bukkit.getScheduler().runTaskAsynchronously(Main.getMain(), () -> {
+
+				// Lista com os valores do banco de dados
+				LinkedList<Report> reports = ReportManager.getLastReports();
+
+				/*
+				 * Construtor da mensagem
+				 * Mesmo que não tenham 10 valores no banco, não dará erro
+				 * Pois executa um forEach (Para cada)
+				 */
+				List<String> list = Main.getMain().messages.getStringList("reports_header");
+				for (String line : list) {
+					p.spigot().sendMessage(MineDown.parse(line));
+				}
+				reports.stream().forEachOrdered(r -> {
+					p.spigot().sendMessage(MineDown.parse(Main.noperm3
+							.replaceAll("%id%", String.valueOf(r.getID()))
+							.replaceAll("%reporter%", r.getReporter())
+							.replaceAll("%reported%", r.getReportado())
+							.replaceAll("%date%", r.getData().getDayOfMonth() + "§7/§f" + r.getData().getMonthValue())
+							.replaceAll("%time%", r.getData().getHour() + "§7:§f" + r.getData().getMinute())
+							.replaceAll("%message%", r.getMensagem())));
+				});
+				List<String> list2 = Main.getMain().messages.getStringList("reports_footer");
+				for (String line2 : list2) {
+					p.spigot().sendMessage(MineDown.parse(line2));
+				}
 			});
-			List<String> list2 = Main.getMain().messages.getStringList("reports_footer");
-			for (String line2 : list2) {
-				p.spigot().sendMessage(MineDown.parse(line2));
-			}
-		});
+		} else {
+			s.sendMessage("[SimplexReports] Console can't see reports list. [ERROR]");
+		}
 	}
 
 	@Override

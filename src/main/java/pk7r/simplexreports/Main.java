@@ -30,14 +30,9 @@ public class Main extends JavaPlugin {
     public static String admin_warn;
     public static String rinfo_message;
     public static String unkown_report;
-    public static String rinfo_usage;
     public static Integer reports;
     public static String reports_header;
     public static String reports_footer;
-    public static String reports_reportado;
-    public static String reports_reporter;
-    public static String reports_id;
-    public static String reports_messagem;
 
     public String host, database, username, password, table;
 
@@ -73,20 +68,20 @@ public class Main extends JavaPlugin {
         }
         this.messages1 = new File(this.getDataFolder(), "messages.yml");
         this.messages = YamlConfiguration.loadConfiguration(this.messages1);
-        noperm = getMain().messages.getString("no_permission").replace("&", "§");
-        noperm2 = getMain().messages.getString("rinfo_usage").replace("&", "§");
-        noperm3 = getMain().messages.getString("reports_message").replace("&", "§");
-        reports = Integer.valueOf(getMain().getConfig().getString("reports_list"));
-        reports_header  = getMain().messages.getString("reports_header").replace("&", "§");
-        reports_footer  = getMain().messages.getString("reports_footer").replace("&", "§");
-        usage  = getMain().messages.getString("correct_usage").replace("&", "§");
-        sucessreport  = getMain().messages.getString("sucess_report").replace("&", "§");
-        rinfo_message  = getMain().messages.getString("rinfo_message").replace("&", "§");
-        errormessage  = getMain().messages.getString("report_missing_message").replace("&", "§");
-        admin_warn  = getMain().messages.getString("admin_warn").replace("&", "§");
-        offlineplayer  = getMain().messages.getString("unkown_player").replace("&", "§");
-        reportme  = getMain().messages.getString("report_me").replace("&", "§");
-        unkown_report  = getMain().messages.getString("unkown_report").replace("&", "§");
+        noperm = getMain().messages.getString("no_permission").replace("&","§");
+        noperm2 = getMain().messages.getString("rinfo_usage").replace("&","§");
+        noperm3 = getMain().messages.getString("reports_message").replace("&","§");
+        reports = Integer.valueOf(getMain().getConfig().getString("reports_list")).replace("&","§");
+        reports_header  = getMain().messages.getString("reports_header").replace("&","§");
+        reports_footer  = getMain().messages.getString("reports_footer").replace("&","§");
+        usage  = getMain().messages.getString("correct_usage").replace("&","§");
+        sucessreport  = getMain().messages.getString("sucess_report").replace("&","§");
+        rinfo_message  = getMain().messages.getString("rinfo_message").replace("&","§");
+        errormessage  = getMain().messages.getString("report_missing_message").replace("&","§");
+        admin_warn  = getMain().messages.getString("admin_warn").replace("&","§");
+        offlineplayer  = getMain().messages.getString("unkown_player").replace("&","§");
+        reportme  = getMain().messages.getString("report_me").replace("&","§");
+        unkown_report  = getMain().messages.getString("unkown_report").replace("&","§");
 
     }
 

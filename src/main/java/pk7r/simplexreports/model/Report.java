@@ -61,30 +61,33 @@ public class Report {
     public void saveAsync() {
         Bukkit.getScheduler().runTaskAsynchronously(Main.getMain(), () -> {
           this.id = ReportManager.saveReport(this);
+          adminWarn();
         });
     }
-    
+
     /**
      * Envia uma mensagem a todos os administradores online sobre o reporte.
      * Chamado após o salvamento no banco de dados ser concluído e o ID for obtível.
      */
     public void adminWarn() {
         List<String> list = Main.getMain().messages.getStringList("admin_warn");
-        for (String line : list) {
-            Bukkit.getOnlinePlayers().stream().filter(p -> p.hasPermission("reports.admin")).forEach(p -> {
-                p.spigot().sendMessage(MineDown.parse(line
-                        .replaceAll("%id%", String.valueOf(id))
-                        .replaceAll("%reporter%", reporterName)
-                        .replaceAll("%reported%", reportadoName)
-                        .replaceAll("%message%", mensagem)
-                        .replaceAll("%day%", String.valueOf(data.getDayOfMonth()))
-                        .replaceAll("%month%", String.valueOf(data.getMonthValue()))
-                        .replaceAll("%year%", String.valueOf(data.getYear()))
-                        .replaceAll("%hour%", String.valueOf(data.getHour()))
-                        .replaceAll("%minute%", String.valueOf(data.getMinute()))
-                        .replaceAll("%second%", String.valueOf(data.getSecond()))));
-            });
-        }
+        Bukkit.getScheduler().runTaskAsynchronously(Main.getMain(), () -> {
+            for (String line : list) {
+                Bukkit.getOnlinePlayers().stream().filter(p -> p.hasPermission("reports.admin")).forEach(p -> {
+                    p.spigot().sendMessage(MineDown.parse(line
+                            .replaceAll("%id%", "" + id)
+                            .replaceAll("%reporter%", reporterName)
+                            .replaceAll("%reported%", reportadoName)
+                            .replaceAll("%message%", mensagem)
+                            .replaceAll("%day%", String.valueOf(data.getDayOfMonth()))
+                            .replaceAll("%month%", String.valueOf(data.getMonthValue()))
+                            .replaceAll("%year%", String.valueOf(data.getYear()))
+                            .replaceAll("%hour%", String.valueOf(data.getHour()))
+                            .replaceAll("%minute%", String.valueOf(data.getMinute()))
+                            .replaceAll("%second%", String.valueOf(data.getSecond()))));
+                });
+            }
+        });
     }
     
     /**
