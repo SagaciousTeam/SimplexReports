@@ -8,13 +8,11 @@ import pk7r.simplexreports.Main;
 import pk7r.simplexreports.commands.CMDBase;
 import pk7r.simplexreports.model.Report;
 
-import java.sql.SQLException;
-
 public class ReportCommand implements CMDBase {
 
-	public void onCommand(CommandSender s, String[] args) throws SQLException, ClassNotFoundException {
+	public void onCommand(CommandSender s, String[] args) {
 		Player sender = (Player) s;
-		if ( (s instanceof Player) ) {
+		if ((s instanceof Player)) {
 			if ( args.length < 1 ) {
 				sender.spigot().sendMessage(MineDown.parse(Main.usage));
 				return;
@@ -24,7 +22,7 @@ public class ReportCommand implements CMDBase {
 				return;
 			}
 			Player reported = Bukkit.getPlayer(args[0]);
-			String motivo = "";
+			StringBuilder motivo = new StringBuilder();
 
 
 			if ( reported == null ) {
@@ -37,19 +35,28 @@ public class ReportCommand implements CMDBase {
 
 			}
 			for (int i = 1; i <= args.length - 1; i++) {
-				motivo = motivo + args[i];
+				motivo.append(args[i]);
 				if ( i != args.length - 1 )
-					motivo = motivo + " ";
+					motivo.append(" ");
 			}
 
-			Report report = new Report(sender.getName(), reported.getName(), motivo);
+			Report report = new Report(sender.getName(), reported.getName(), motivo.toString());
 			report.saveAsync();
+			String data = report.getData().getDayOfMonth() + "§7/§f" + report.getData().getMonthValue();
+			String horario = report.getData().getHour() + "§7:§f" + report.getData().getMinute();
 			sender.spigot().sendMessage(MineDown.parse(Main.sucessreport
-					.replaceAll("%reported%", reported.getName())));
+					.replaceAll("%id%", String.valueOf(report.getID()))
+					.replaceAll("%reporter%", report.getReporter())
+					.replaceAll("%reported%", reported.getName())
+					.replaceAll("%message%", report.getMensagem())
+					.replaceAll("%date%", data)
+					.replaceAll("%time%", horario)));
+			return;
 		} else {
 			s.sendMessage("[SimplexReports] Console can't create reports. [ERROR]");
 		}
 	}
+
 
 	public String name() {return "report";}
 

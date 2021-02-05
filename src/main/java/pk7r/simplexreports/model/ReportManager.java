@@ -2,13 +2,12 @@ package pk7r.simplexreports.model;
 
 import org.bukkit.Bukkit;
 import pk7r.simplexreports.Main;
-import pk7r.simplexreports.db.Database;
 
-import javax.xml.crypto.Data;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
-import java.util.Optional;
 
 public class ReportManager {
 
@@ -39,7 +38,7 @@ public class ReportManager {
     }
 
     public static LinkedList<Report> getLastReports() {
-        LinkedList<Report> reportes = new LinkedList<Report>();
+        LinkedList<Report> reportes = new LinkedList<>();
         try {
             ResultSet rs = Main.getMain().getSQL().querySQL("SELECT * FROM simplexreports ORDER BY id DESC LIMIT " + Main.reports);
             if ( !rs.next() ) {
@@ -76,6 +75,7 @@ public class ReportManager {
             }
 
             // preenche os valores
+            assert stmt != null;
             stmt.setString(1, report.getReporter());
             stmt.setString(2, report.getReportado());
             stmt.setString(3, report.getMensagem());

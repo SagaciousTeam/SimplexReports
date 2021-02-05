@@ -8,7 +8,7 @@ public enum ReportGetterType {
     REPORTED("SELECT * FROM simplexreports WHERE reported=?;"),
     MESSAGE("SELECT * FROM simplexreports WHERE message=?;");
 
-    private String sql;
+    private final String sql;
 
     ReportGetterType(String sql) {
         this.sql = sql;

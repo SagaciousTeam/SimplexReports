@@ -11,6 +11,7 @@ correct_usage: '&6[SimplexReports] &7Correct use: /report <player> <message>'
 ##SERVER OPERATOR OR USER WITH PERM (reports.admin) WILL RECEIVE
 
 ##THIS MESSAGE WHEN A REPORT IS PERFORMED
+##PLACEHOLDERS AVALIABLE TO USE: %id%, %reporter%, %reported%, %message%, %date%, %time%
 admin_warn:
   - ''
   - '&6&nNew Report'
@@ -19,12 +20,13 @@ admin_warn:
   - '&6Reporter: &f%reporter%'
   - '&6Reported: &f%reported%'
   - '&6Message: [&e[Mouse over to view message]](hover=%message%)'
-  - '&6Date: &f%month%&7/&f%day%&7/&f%year%'
-  - '&6Time: &f%hour%&7:&f%minute%&7:&f%second%'
+  - '&6Date: &f%date%'
+  - '&6Time: &f%time%'
   - ''
 
 
 ##REPORT INFO COMMAND (/rinfo <id>)
+##PLACEHOLDERS AVALIABLE TO USE: %id%, %reporter%, %reported%, %message%, %date%, %time%
 rinfo_message:
   - '&6&nReport Info'
   - ''
@@ -45,6 +47,7 @@ unkown_report: '&6[SimplexReports] &cThis report does not exist.'
 reports_header:
   - '&6&nReports List'
   - ''
+##PLACEHOLDERS AVALIABLE TO USE: %id%, %reporter%, %reported%, %message%, %date%, %time%
 reports_message: '&6ID: &f%id% &6Reporter: &f%reporter% &6Reported: &f%reported% [&6[Details]](/rinfo %id%)'
 reports_footer:
   - ''

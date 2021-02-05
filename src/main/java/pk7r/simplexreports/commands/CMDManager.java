@@ -1,6 +1,8 @@
 package pk7r.simplexreports.commands;
 
 import java.util.ArrayList;
+import java.util.Objects;
+
 import pk7r.simplexreports.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -12,13 +14,13 @@ import pk7r.simplexreports.commands.subcommands.ReportsCmd;
 
 public class CMDManager implements CommandExecutor{
 
-    private ArrayList<CMDBase> commands = new ArrayList<>();
-    private Main plugin = Main.getMain();
+    private final ArrayList<CMDBase> commands = new ArrayList<>();
+    private final Main plugin = Main.getMain();
 
     public void setup() {
-        plugin.getCommand("report").setExecutor(this);
-        plugin.getCommand("reports").setExecutor(this);
-        plugin.getCommand("rinfo").setExecutor(this);
+        Objects.requireNonNull(plugin.getCommand("report")).setExecutor(this);
+        Objects.requireNonNull(plugin.getCommand("reports")).setExecutor(this);
+        Objects.requireNonNull(plugin.getCommand("rinfo")).setExecutor(this);
         this.commands.add(new ReportCommand());
         this.commands.add(new ReportsCmd());
         this.commands.add(new RInfoCmd());

@@ -70,6 +70,9 @@ public class Report {
      * Chamado após o salvamento no banco de dados ser concluído e o ID for obtível.
      */
     public void adminWarn() {
+        String date = data.getDayOfMonth() + "§7/§f" + data.getMonthValue();
+        String horario = data.getHour() + "§7:§f" + data.getMinute();
+
         List<String> list = Main.getMain().messages.getStringList("admin_warn");
         Bukkit.getScheduler().runTaskAsynchronously(Main.getMain(), () -> {
             for (String line : list) {
@@ -79,12 +82,8 @@ public class Report {
                             .replaceAll("%reporter%", reporterName)
                             .replaceAll("%reported%", reportadoName)
                             .replaceAll("%message%", mensagem)
-                            .replaceAll("%day%", String.valueOf(data.getDayOfMonth()))
-                            .replaceAll("%month%", String.valueOf(data.getMonthValue()))
-                            .replaceAll("%year%", String.valueOf(data.getYear()))
-                            .replaceAll("%hour%", String.valueOf(data.getHour()))
-                            .replaceAll("%minute%", String.valueOf(data.getMinute()))
-                            .replaceAll("%second%", String.valueOf(data.getSecond()))));
+                            .replaceAll("%date%", date)
+                            .replaceAll("%time%", horario)));
                 });
             }
         });

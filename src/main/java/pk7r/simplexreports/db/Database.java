@@ -85,9 +85,7 @@ public abstract class Database {
 
         Statement statement = connection.createStatement();
 
-        ResultSet result = statement.executeQuery(query);
-
-        return result;
+        return statement.executeQuery(query);
     }
 
     /**
@@ -97,13 +95,12 @@ public abstract class Database {
      *
      * @param query
      *            Query to be run
-     * @return Result Code, see {@link java.sql.Statement#executeUpdate(String)}
      * @throws SQLException
      *             If the query cannot be executed
      * @throws ClassNotFoundException
      *             If the driver cannot be found; see {@link #openConnection()}
      */
-    public int updateSQL(String query) throws SQLException, ClassNotFoundException {
+    public void updateSQL(String query) throws SQLException, ClassNotFoundException {
         if (!checkConnection()) {
             openConnection();
         }
@@ -112,7 +109,6 @@ public abstract class Database {
 
         int result = statement.executeUpdate(query);
 
-        return result;
     }
 
     public String getTablePrefix() {

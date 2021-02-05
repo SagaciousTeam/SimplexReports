@@ -2,6 +2,7 @@ package pk7r.simplexreports.commands.subcommands;
 
 import de.themoep.minedown.MineDown;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pk7r.simplexreports.Main;
@@ -9,17 +10,16 @@ import pk7r.simplexreports.commands.CMDBase;
 import pk7r.simplexreports.model.Report;
 import pk7r.simplexreports.model.ReportManager;
 
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
 public class ReportsCmd implements CMDBase {
 
 	@Override
-	public void onCommand(CommandSender s, String[] args) throws SQLException, ClassNotFoundException {
-		if ( s instanceof Player ) {
+	public void onCommand(CommandSender s, String[] args) {
+		if ((s instanceof Player)) {
 			if ( !s.hasPermission("reports.admin") ) {
-				s.sendMessage(Main.noperm);
+				s.spigot().sendMessage(MineDown.parse(Main.no_permission));
 				return;
 			}
 			Player p = (Player) s;
@@ -42,13 +42,15 @@ public class ReportsCmd implements CMDBase {
 					p.spigot().sendMessage(MineDown.parse(line));
 				}
 				reports.stream().forEachOrdered(r -> {
-					p.spigot().sendMessage(MineDown.parse(Main.noperm3
+					p.spigot().sendMessage(MineDown.parse(Main.reports_message
 							.replaceAll("%id%", String.valueOf(r.getID()))
 							.replaceAll("%reporter%", r.getReporter())
 							.replaceAll("%reported%", r.getReportado())
-							.replaceAll("%date%", r.getData().getDayOfMonth() + "§7/§f" + r.getData().getMonthValue())
-							.replaceAll("%time%", r.getData().getHour() + "§7:§f" + r.getData().getMinute())
-							.replaceAll("%message%", r.getMensagem())));
+							.replaceAll("%message%", r.getMensagem())
+							.replaceAll("%date%",
+									r.getData().getDayOfMonth() + "§7/§f" + r.getData().getMonthValue())
+							.replaceAll("%time%",
+									r.getData().getHour() + "§7:§f" + r.getData().getMinute())));
 				});
 				List<String> list2 = Main.getMain().messages.getStringList("reports_footer");
 				for (String line2 : list2) {
@@ -62,19 +64,16 @@ public class ReportsCmd implements CMDBase {
 
 	@Override
 	public String name() {
-		// TODO Auto-generated method stub
 		return "reports";
 	}
 
 	@Override
 	public String info() {
-		// TODO Auto-generated method stub
 		return "";
 	}
 
 	@Override
 	public String[] aliases() {
-		// TODO Auto-generated method stub
 		return new String[0];
 	}
 }
